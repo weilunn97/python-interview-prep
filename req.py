@@ -28,7 +28,12 @@ def http_get(url: str, params: Dict[str, str] = dict(), username: str = "", pass
     return requests.get(url, params=params)
 
 
-def http_post(url: str, username: str = "", password: str = ""):
+def http_post(url: str):
+    """
+    Sends a HTTP POST request to the URL with optional authentication and parameters
+    :param url: URL to send the request to
+    :return: The HTTP response
+    """
     print(f"POST : {url}")
     return requests.post(url)
 
@@ -52,12 +57,14 @@ class TestRequestMethods(unittest.TestCase):
         self.assertEqual(True, res.ok)
 
     def test_http_post(self):
-        url = "http://httpbin.org/get"
+        url = "http://httpbin.org/post"
         res = http_post(url)
+        self.assertEqual(url, res.url)
+        self.assertEqual(200, res.status_code)
+        self.assertEqual(True, res.ok)
 
     def test_save_image(self):
         pass
-
 
 
 if __name__ == "__main__":
